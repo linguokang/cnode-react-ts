@@ -42,16 +42,11 @@ class TopicsList extends Component<IProps> {
 
     componentDidMount() {
         console.log(234)
-        this.test()
     }
 
     // componentDidUpdate(prevProps, prevState, prevContext) {
 
     // }
-
-    test = () => {
-        console.log('yerre')
-    }
 
     tag = (topic:any) => {
         if (topic.top) {
