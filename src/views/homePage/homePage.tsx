@@ -7,13 +7,11 @@ import { querystring } from '../../utils/utils'
 import { Pagination } from 'antd'
 import axios from 'axios'
 import List from '../../components/topics-list/TopicsList'
+import { RouteComponentProps } from 'react-router-dom';
 /* eslint-disable */
 
-interface IProps {
-    location:{
-        search:string
-    },
-    history:any
+interface IProps extends RouteComponentProps<any>{
+    
 }
 
 interface IState {

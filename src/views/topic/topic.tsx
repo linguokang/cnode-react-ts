@@ -9,6 +9,7 @@ import { observable } from 'mobx'
 import SimpleMDE from 'simplemde'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
+import { RouteComponentProps } from 'react-router-dom';
 
 
 interface item {
@@ -21,7 +22,7 @@ interface author {
     avatar_url: string,
 }
 
-interface IProps{
+interface IProps extends RouteComponentProps<any>{
     store: {
         isLogin: boolean,
         userInfo: {
@@ -30,12 +31,6 @@ interface IProps{
             id: string
         },
     },
-    match:{
-        params:{
-            id:number,
-        }
-    },
-    history:string
 }
 
 interface IState {

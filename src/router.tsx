@@ -13,6 +13,7 @@ import Topic from './views/topic/topic'; //主题详情
 // import UserView from '../Component/UserView'; //我的个人中心
 // import Signin from '../Component/Signin'; //登录
 // import Signout from '../Component/Signout'; //退出
+import User from './views/user/user'
 import NotMatch from './views/404/404'; //404
 
 // const HomePage =() => <div>Home Page</div>
@@ -35,7 +36,7 @@ const RouteConfig = ()=>(
 		    {/*<Route path="/topic/create" component={TopicCreate} />*/}
 		    <Route path="/topic/:id" component={Topic} />
 		    {/*<Route path="/my/messages" component={MyMessages} />*/}
-		    {/*<Route path="/user/:loginname" component={UserView} />*/}
+            <Route path="/user/:loginname" exact component={User} />
 		    {/*<Route path="/signin" component={Signin} />*/}
 		    {/*<Route path="/signout" component={Signout} />*/}
 		    {/* <Redirect from='' to="/" /> */}
