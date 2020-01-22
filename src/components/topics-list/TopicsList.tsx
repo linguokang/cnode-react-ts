@@ -41,7 +41,6 @@ class TopicsList extends Component<IProps> {
     }
 
     componentDidMount() {
-        console.log(234)
     }
 
     // componentDidUpdate(prevProps, prevState, prevContext) {
@@ -101,11 +100,6 @@ class TopicsList extends Component<IProps> {
     }
 
     render() {
-//         let myName = 'Tom';
-
-// console.log(`My name is ${myNane}`);
-// console.log(`My name is ${myName.toStrng()}`);
-// console.log(`My name is ${myName}`)
         return (
             <ul className="unique-topics-list">
                 {
@@ -137,43 +131,5 @@ class TopicsList extends Component<IProps> {
     }
 }
 
-// TopicsList.propTypes = {
-//     topics: PropTypes.array.isRequired
-// }
 
 export default TopicsList;
-
-// class topicslist extends Component{
-//     render () {
-
-//         console.log(this.props.topics);
-
-//         return (
-//             <ul className="list">
-//                 {
-//                     this.props.topics.map((topice)=>{
-//                         return (
-//                             <li key={topice.id}>
-//                                 {/* {topice.id} */}
-//                                 <div className="avavter">
-//                                     <Link to={`/user/${topice.author.loginname}`}>
-//                                         <img src={topice.author.avatar_url} alt="touxiang" title={topice.author.loginname}></img>
-//                                     </Link>
-//                                 </div>
-//                                 {
-//                                     topice.reply_count !== undefined && <div className="reply">{topice.reply_count}/{topice.visit_count}</div>
-//                                 }
-//                                 <Link to={`/topic/${topice.id}`} className="title">{topice.title}</Link>
-//                                 <div className="last-re">
-//                                     <time>{ fromNow(topice.last_reply_at) }</time>
-//                                 </div>
-//                             </li>
-//                         )
-//                     })
-//                 }
-//             </ul>
-//         )
-//     }
-// }
-
-// export default topicslist

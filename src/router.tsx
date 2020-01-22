@@ -4,7 +4,6 @@ import { BrowserRouter, HashRouter, Switch, Route, Redirect} from 'react-router-
 
 // const history = createBrowserHistory();
 
-import IndexList from './components/IndexList/IndexList'; //首页组件
 import homePage from './views/homePage/homePage'; //首页组件
 import Login from './views/login/login';
 import Topic from './views/topic/topic'; //主题详情
@@ -13,6 +12,7 @@ import Topic from './views/topic/topic'; //主题详情
 // import UserView from '../Component/UserView'; //我的个人中心
 // import Signin from '../Component/Signin'; //登录
 // import Signout from '../Component/Signout'; //退出
+import Collections from './views/collections/collections'
 import User from './views/user/user'
 import NotMatch from './views/404/404'; //404
 
@@ -21,7 +21,6 @@ import NotMatch from './views/404/404'; //404
 const RouteConfig = ()=>(
     <BrowserRouter>
 	    <Switch>
-	      <Route path="/test" exact component={IndexList} />
 	      <Route path="/" exact component={homePage} />
           <Route path="/login" component={Login} />
 	      {/* <Route path="/button" exact component={IndexList} /> */}
@@ -37,6 +36,7 @@ const RouteConfig = ()=>(
 		    <Route path="/topic/:id" component={Topic} />
 		    {/*<Route path="/my/messages" component={MyMessages} />*/}
             <Route path="/user/:loginname" exact component={User} />
+            <Route path="/user/:loginname/collections" component={Collections} />
 		    {/*<Route path="/signin" component={Signin} />*/}
 		    {/*<Route path="/signout" component={Signout} />*/}
 		    {/* <Redirect from='' to="/" /> */}

@@ -33,6 +33,7 @@ class Store {
     }
     // 检查是否已登录
     @action checkLogin () {
+        console.log(this.accessToken)
         if( this.accessToken ) {
             axios.post(API_CONFIG.login)
             .then(res => {
