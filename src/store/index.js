@@ -1,5 +1,6 @@
 import  { observable, action } from 'mobx'
 import API_CONFIG from '../api/index.tsx'
+import axios from 'axios'
 
 /* eslint-disable */
 class Store {
