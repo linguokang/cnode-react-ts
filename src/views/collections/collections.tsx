@@ -27,7 +27,7 @@ let Collections = (props:IProps) => {
 
     useEffect(() => {
         fetchCollections()
-    })
+    },[])
 
     useEffect(() => {
         
