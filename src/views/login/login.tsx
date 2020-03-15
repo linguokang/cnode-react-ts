@@ -1,12 +1,17 @@
-import React, { Component,useState,useEffect } from 'react'
+import React, { useState,useEffect } from 'react'
 import { message } from 'antd';
 import './login.scss'
 import { observer, inject } from 'mobx-react'
 import API_CONFIG from '../../api'
 import axios from 'axios'
+import { RouteComponentProps } from 'react-router-dom';
+import { Istore } from '../../interfaces/interface'
 
+interface IProps extends RouteComponentProps<any>{
+    store:Istore
+}
 
-const Login = inject("store")(observer(({ store }) => {
+const Login = inject("store")(observer((props:IProps) => {
 
 
     const [accessToken, setAccessToken] = useState(window.localStorage.save_access_token || '');
@@ -19,7 +24,7 @@ const Login = inject("store")(observer(({ store }) => {
      * @param {Number} type 
      * @param {event} e 
      */
-    let handleChange = (e:any) => {
+    let handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         // this.setState({
         //     accessToken: e.target.value.trim()
         // })
@@ -33,7 +38,8 @@ const Login = inject("store")(observer(({ store }) => {
         })
         .then(res => {
             if( res.data.success ) {
-                store.login(accessToken, res.data);
+                props.store.login(accessToken, res.data);
+                props.history.replace('/');
             }
         })
         .catch(e => e);
@@ -54,7 +60,7 @@ const Login = inject("store")(observer(({ store }) => {
                         {/* onChange={setAccessToken(e.target.value.trim())} /> */}
                 </div>
                 <div className="get-access-token">
-                    <a href="https://cnodejs.org/setting" target="_blank" rel="noopener noreferer">如何获取Access Token？</a>
+                    <a href="https://cnodejs.org/setting" target="_blank" rel="noopener noreferrer">如何获取Access Token？</a>
                 </div>
                 <div className="submit user-select-none" onClick={handleSubmit}>Sign in</div>
             </div>

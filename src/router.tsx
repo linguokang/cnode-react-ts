@@ -1,6 +1,6 @@
 import React from "react";
 // import { BrowserRouter as Router, Route, Link } from "react-router-dom";
-import { BrowserRouter, HashRouter, Switch, Route, Redirect} from 'react-router-dom';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
 // const history = createBrowserHistory();
 

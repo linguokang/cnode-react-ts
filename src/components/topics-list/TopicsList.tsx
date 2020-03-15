@@ -1,53 +1,17 @@
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
 import './TopicsList.scss'
 import { Link } from 'react-router-dom'
 import { fromNow } from '../../utils/utils'
-import Item from 'antd/lib/list/Item';
+import { Itopics } from '../../interfaces/interface'
 
-interface item {
-    id:string,
-    reply_count:string,
-    author:{
-        loginname:string,
-        avatar_url:string,
-    }
-    visit_count:string,
-    last_reply_at:string,
-    title:string,
-    tab:any
-}
 
 interface IProps {
-    topics: Array<item>,
+    topics: Array<Itopics>,
 }
-// interface IState {
-//     page: number,
-//     total: number,
-//     topics: number,
-//     mark:boolean,
-// }
 
 class TopicsList extends Component<IProps> {
 
-    constructor(props:IProps) {
-        super(props)
-        // this.state = {
-        //     page: 1,        // 当前页
-        //     total: 9999,    // 总条数
-        //     topics: [],     // 主题列表
-        //     mark: false,
-        // }
-    }
-
-    componentDidMount() {
-    }
-
-    // componentDidUpdate(prevProps, prevState, prevContext) {
-
-    // }
-
-    tag = (topic:any) => {
+    tag = (topic:Itopics) => {
         if (topic.top) {
             return {
                 text: '置顶',

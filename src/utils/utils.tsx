@@ -15,6 +15,6 @@ export function querystring (search:string):any {
     return query;
 }
 
-export function fromNow (date:string) {
+export function fromNow (date:string | number) {
     return moment(date).fromNow();
 }

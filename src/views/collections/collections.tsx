@@ -9,12 +9,6 @@ import { RouteComponentProps } from 'react-router-dom';
 import axios from 'axios'
 
 interface IProps extends RouteComponentProps<any>{
-
-}
-
-interface IState {
-    userCollections:any[],
-    loading:boolean
 }
 
 let Collections = (props:IProps) => {

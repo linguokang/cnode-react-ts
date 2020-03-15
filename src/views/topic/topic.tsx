@@ -10,42 +10,27 @@ import SimpleMDE from 'simplemde'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
 import { RouteComponentProps } from 'react-router-dom';
+import { Istore, IuserInfo, Itopics, Ireplie} from '../../interfaces/interface'
 
 
-interface item {
-    top:string,
-    good:string,
-}
 
-interface author {
-    loginname: string,
-    avatar_url: string,
-}
 
 interface IProps extends RouteComponentProps<any>{
-    store: {
-        isLogin: boolean,
-        userInfo: {
-            avatar_url: string,
-            loginname: string,
-            id: string
-        },
-    },
+    store: Istore
 }
 
 interface IState {
-//   simplemde: any,
 }
 
-let simplemde:any
+let simplemde:SimpleMDE
 
 /* eslint-disable */
 // @inject(stores => stores)
 @inject('store')
 @observer class Topic extends Component<IProps,IState> {
 
-    @observable loading = true;
-    @observable detail:any = {
+    @observable loading: boolean= true;
+    @observable detail:Itopics = {
         author: {
             avatar_url: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAMAAAACAQMAAACnuvRZAAAAA1BMVEX29vYACyOqAAAACklEQVQI12MAAgAABAABINItbwAAAABJRU5ErkJggg==',
             loginname: '--',
@@ -69,7 +54,6 @@ let simplemde:any
     constructor(props:IProps) {
         super(props);
         this.state = {
-            // simplemde:''
         };
     }
 
@@ -88,7 +72,7 @@ let simplemde:any
         }
     }
 
-    tag = (item:item) => {
+    tag = (item:Itopics) => {
         if (item.top) return '置顶';
         if (item.good) return '精华';
     }
@@ -127,7 +111,7 @@ let simplemde:any
      * @param {Object} author 
      * @param {Number} index 
      */
-    likeBtn(id:number, author:author, index:number) {
+    likeBtn(id:string, author:IuserInfo, index:number) {
         try {
             if (!this.props.store.isLogin) throw new Error('您未登陆!');
             if (author.loginname === this.props.store.userInfo.loginname) throw new Error('不能赞自己!');
@@ -248,7 +232,7 @@ let simplemde:any
                             <div className="reply-count">{this.detail.reply_count} 回复</div>
                             <ul>
                                 {
-                                    this.detail.replies.map((item:any, index:number) => {
+                                    this.detail.replies.map((item:Ireplie, index:number) => {
                                         return (
                                             <li key={item.id}>
                                                 <div className="avatar">

@@ -1,25 +1,26 @@
 import  { observable, action } from 'mobx'
-import API_CONFIG from '../api/index.tsx'
+import API_CONFIG from '../api/index'
 import axios from 'axios'
+import { IuserInfo } from '../interfaces/interface'
 
 /* eslint-disable */
 class Store {
 
-    @observable accessToken = window.localStorage.access_token || '';
-    @observable isLogin = false;
-    @observable userInfo = {
+    @observable accessToken: string = window.localStorage.access_token || '';
+    @observable isLogin: boolean = false;
+    @observable userInfo: IuserInfo = {
         avatar_url: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAMAAAACAQMAAACnuvRZAAAAA1BMVEX29vYACyOqAAAACklEQVQI12MAAgAABAABINItbwAAAABJRU5ErkJggg==',     // 头像
         id: '',             // 用户 id
         loginname: '',      // 用户名
     };
-    @observable messageCount = 0;       // 未读消息数
+    @observable messageCount: number = 0;       // 未读消息数
 
     /**
      * @func 登录
      * @param {String} accessToken 
      * @param {Object} userInfo 
      */
-    @action login (accessToken, userInfo) {
+    @action login (accessToken: string, userInfo: IuserInfo) :void {
         window.localStorage.access_token = window.localStorage.save_access_token = this.accessToken = accessToken;
         this.userInfo = userInfo;
         this.isLogin = true;
@@ -33,7 +34,6 @@ class Store {
     }
     // 检查是否已登录
     @action checkLogin () {
-        console.log(this.accessToken)
         if( this.accessToken ) {
             axios.post(API_CONFIG.login)
             .then(res => {
