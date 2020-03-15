@@ -8,21 +8,15 @@ import { fromNow } from '../../utils/utils'
 import List from '../../components/topics-list/TopicsList'
 import axios from 'axios'
 import { RouteComponentProps } from 'react-router-dom';
+import { Istore, IuserInfo } from '../../interfaces/interface'
 
 
 interface IProps extends RouteComponentProps<any> {
-    store: {
-        isLogin: boolean,
-        userInfo: {
-            avatar_url: string,
-            loginname: string,
-            id: string
-        },
-    },
+    store: Istore
 }
 
 interface IState {
-  user: any,
+  user: IuserInfo,
 }
 
 /* eslint-disable */

@@ -3,33 +3,25 @@ import "./sidebar.scss"
 import { observer, inject } from 'mobx-react'
 import { Carousel } from 'antd'
 import { Link } from 'react-router-dom'
+import { Istore, IuserInfo } from '../../interfaces/interface'
 
 /* eslint-disable */
 // @inject(stores => stores)
 
 interface IProps {
-    from: string,
-    store: {
-        isLogin: boolean,
-        userInfo: {
-            avatar_url: string,
-            loginname: string,
-            id: string
-        },
-    },
-    author: {
-        loginname: string,
-        avatar_url: string,
-    }
+    from?: string,
+    store?: Istore,
+    author?: IuserInfo
 }
 // interface IState {
 //   count: number,
 // }
 
 @inject('store')
-@observer class Sidebar extends Component<any> {
-// class Sidebar extends Component {
-
+@observer class Sidebar extends Component<IProps> {
+    constructor(props:IProps) {
+        super(props)
+    }
     render () {
         return (
             <aside className="sidebar">

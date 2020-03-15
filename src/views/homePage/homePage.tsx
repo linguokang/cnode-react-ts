@@ -1,4 +1,4 @@
-import React, { Component,useState } from 'react'
+import React, { Component } from 'react'
 import { NavLink } from 'react-router-dom'
 import './homePage.scss'
 import API_CONFIG from '../../api/index'
@@ -8,6 +8,7 @@ import { Pagination } from 'antd'
 import axios from 'axios'
 import List from '../../components/topics-list/TopicsList'
 import { RouteComponentProps } from 'react-router-dom';
+import { Itopics } from '../../interfaces/interface'
 
 interface IProps extends RouteComponentProps<any>{
     
@@ -16,7 +17,7 @@ interface IProps extends RouteComponentProps<any>{
 interface IState {
     page:number,
     total:number,
-    topics:Array<any>,
+    topics:Itopics[],
     mark:boolean
 }
 
@@ -40,8 +41,8 @@ class HomePage extends Component<IProps,IState> {
         })
     }
 
-    componentDidUpdate (prevProps:any, prevState: any, prevContext: any) {
-        if( this.props.location != prevProps.location ) {
+    componentDidUpdate (prevProps:IProps, prevState: IState) {
+        if( this.props.location !== prevProps.location ) {
             var page = parseInt(querystring(this.props.location.search).page);
             if( !page ) {
                 this.setState({page: 1}, () => {
@@ -99,7 +100,7 @@ class HomePage extends Component<IProps,IState> {
 
     homePageActive = () => {
         var tab = querystring(this.props.location.search).tab;
-        return !tab || tab == 'all';
+        return !tab || tab === 'all';
     }
 
     currentChange = (page:number) => {
