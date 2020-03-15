@@ -5,7 +5,7 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import homePage from './views/homePage/homePage'; //首页组件
 import Login from './views/login/login';
 import Topic from './views/topic/topic'; //主题详情
-// import TopicCreate from '../Component/TopicCreate'; //发布主题
+import TopicCreate from './views/release/release'; //发布主题
 import Collections from './views/collections/collections'
 import User from './views/user/user'
 import NotMatch from './views/404/404'; //404
@@ -17,7 +17,7 @@ const RouteConfig = ()=>(
 	    <Switch>
 	        <Route path="/" exact component={homePage} />
             <Route path="/login" component={Login} />
-		    {/*<Route path="/topic/create" component={TopicCreate} />*/}
+		    <Route path="/release/:id" component={TopicCreate} />
 		    <Route path="/topic/:id" component={Topic} />
 		    <Route path="/my/messages" component={Messages} />
             <Route path="/user/:loginname" exact component={User} />

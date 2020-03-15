@@ -152,7 +152,7 @@ let simplemde:SimpleMDE
         if (!val) return message.warning('内容不能为空!');
         this.insertBtnText = '发送中...';
         axios.post(`${API_CONFIG.replies}${this.detail.id}/replies`, {
-            content: `${val}   \n\n\n[来自第三方react-cnode](https://github.com/xjh22222228/react-cnode)`,
+            content: `${val}`,
         })
             .then(res => {
                 if (res.data.success) {
