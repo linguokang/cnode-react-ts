@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { useState,useEffect } from 'react'
 import { NavLink } from 'react-router-dom'
 import './homePage.scss'
 import API_CONFIG from '../../api/index'
@@ -14,141 +14,108 @@ interface IProps extends RouteComponentProps<any>{
     
 }
 
-interface IState {
-    page:number,
-    total:number,
-    topics:Itopics[],
-    mark:boolean
-}
+const HomePage = (props:IProps) => {
 
-class HomePage extends Component<IProps,IState> {
+    const [tab, setTab] = useState(querystring(props.location.search).tab || '')
+    const [page, setPage] = useState(parseInt(querystring(props.location.search).page) || 1)
+    const [total, setTotal] = useState(9999)
+    const [topics, setTopics] = useState([])
+    const [mark, setMark] = useState(true)
 
-    constructor (props:IProps) {
-        super(props)
-        this.state = {
-            page: 1,        // 当前页
-            total: 9999,    // 总条数
-            topics: [],     // 主题列表
-            mark: false,
-        }
-    }
+    useEffect(() => {
+        fetchTopics()
+    },[tab, page])
 
-    componentDidMount () {
-        this.setState({
-            page: parseInt(querystring(this.props.location.search).page) || 1,
-        }, () => {
-            this.fetchTopics();
-        })
-    }
+    useEffect(() => {
+        setTab(querystring(props.location.search).tab || '')
+        setPage(parseInt(querystring(props.location.search).page) || 1)
+    }, [props.location])
 
-    componentDidUpdate (prevProps:IProps, prevState: IState) {
-        if( this.props.location !== prevProps.location ) {
-            var page = parseInt(querystring(this.props.location.search).page);
-            if( !page ) {
-                this.setState({page: 1}, () => {
-                    this.fetchTopics();
-                });
-                return;
-            }
-            this.fetchTopics();
-        }
-    }
 
     /**
      * @func 获取主题列表
      * @param {Number} page
      * @param {String} tab
      */
-    fetchTopics = () => {
-        this.setState({
-            mark: true,
-        });
+    const fetchTopics = () => {
+        setMark(true)
         var beforeTime = Date.now();
         axios.get(API_CONFIG.topics, {
             params: {
                 limit: 40,
                 mdrender: false,
-                tab: querystring(this.props.location.search).tab || 'all',
-                page: this.state.page,
+                tab: querystring(props.location.search).tab || 'all',
+                page: page,
             }
         })
         .then(res => {
             var afterTime = Date.now() - beforeTime;
             if( afterTime <= 300 ) {
                 setTimeout(() => {
-                    this.setState({
-                        mark: false,
-                    });   
+                    setMark(false)
                 }, 300 - afterTime)
             } else {
-                this.setState({
-                    mark: false,
-                });
+                setMark(false)
             }
             if( res.data.success ) {
-                this.setState({
-                    topics: res.data.data
-                });
+                setTopics(res.data.data)
             } 
         })
         .catch(e => e);
     }
 
-    isActive (tabVal:string) {
-        return querystring(this.props.location.search).tab === tabVal;
-    }
-
-    homePageActive = () => {
-        var tab = querystring(this.props.location.search).tab;
-        return !tab || tab === 'all';
-    }
-
-    currentChange = (page:number) => {
-        this.setState({
-            page,
-        })
-        var tab = querystring(this.props.location.search).tab || 'all';
-        this.props.history.push({
+    const currentChange = (page:number) => {
+        var tab = querystring(props.location.search).tab || 'all';
+        props.history.push({
             pathname: '/',
             search: `?tab=${tab}&page=${page}`,
         });
         window.scrollTo(0, 0);
     }
 
-    render () {
-        return (
-            <section className="index-section">
-                <div className="topics-container index-container">
-                    {/* 导航 */}
-                    <nav className="nav">
-                        <NavLink to="/" isActive={this.homePageActive}>全部</NavLink>
-                        <NavLink to="/?tab=good" isActive={this.isActive.bind(this, 'good')}>精华</NavLink>
-                        <NavLink to="/?tab=share" isActive={this.isActive.bind(this, 'share')}>分享</NavLink>
-                        <NavLink to="/?tab=ask" isActive={this.isActive.bind(this, 'ask')}>问答</NavLink>
-                        <NavLink to="/?tab=job" isActive={this.isActive.bind(this, 'job')}>招聘</NavLink>
-                        <NavLink to="/?tab=dev" isActive={this.isActive.bind(this, 'dev')}>客户端测试</NavLink>
-                    </nav>
-                    <div className="topics-list">
-                        <div className="mark-box" style={{display: !this.state.mark ? 'none' : ''}}>
-                            <div className="mark-line"></div>
-                            <div className="mark-line"></div>
-                            <div className="mark-line"></div>
-                        </div>
-                        <List topics={this.state.topics} />
+    const navList = [
+        {router:'',name:'全部'},
+        {router:'good',name:'精华'},
+        {router:'share',name:'分享'},
+        {router:'ask',name:'问答'},
+        {router:'job',name:'招聘'},
+        {router:'dev',name:'客户端测试'},
+    ]
+
+    return (
+        <section className="index-section">
+            <div className="topics-container index-container">
+                {/* 导航 */}
+                <nav className="nav">
+                    {
+                        navList.map((item) => {
+                            return <NavLink key={item.router} to={`/?tab=${item.router}`} isActive={(match, location) => {
+                                const tab = querystring(location.search).tab
+                                return tab === item.router;
+                            }}>{item.name}</NavLink>
+                        })
+                    }
+                </nav>
+                <div className="topics-list">
+                    <div className="mark-box" style={{display: !mark ? 'none' : ''}}>
+                        <div className="mark-line"></div>
+                        <div className="mark-line"></div>
+                        <div className="mark-line"></div>
                     </div>
-                    <div className="pagination-box">
-                        <Pagination 
-                            current={this.state.page} 
-                            onChange={this.currentChange} 
-                            total={this.state.total} 
-                            pageSize={40} />
-                    </div>
+                    <List topics={topics} />
                 </div>
-                {/* 侧边栏 */}
-                <Sidebar />
-            </section>
-        );
-    }
+                <div className="pagination-box">
+                    <Pagination 
+                        current={page} 
+                        onChange={currentChange} 
+                        total={total} 
+                        pageSize={40} />
+                </div>
+            </div>
+            {/* 侧边栏 */}
+            <Sidebar />
+        </section>
+    );
 }
 
 export default HomePage;
