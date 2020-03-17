@@ -16,18 +16,11 @@ const Login = inject("store")(observer((props:IProps) => {
 
     const [accessToken, setAccessToken] = useState(window.localStorage.save_access_token || '');
 
-    useEffect(() => {
-        
-    })
-
     /**
      * @param {Number} type 
      * @param {event} e 
      */
     let handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        // this.setState({
-        //     accessToken: e.target.value.trim()
-        // })
         setAccessToken(e.target.value.trim())
     }
 
@@ -57,7 +50,6 @@ const Login = inject("store")(observer((props:IProps) => {
                         value={accessToken} 
                         placeholder="Access Token" 
                         onChange={handleChange} />
-                        {/* onChange={setAccessToken(e.target.value.trim())} /> */}
                 </div>
                 <div className="get-access-token">
                     <a href="https://cnodejs.org/setting" target="_blank" rel="noopener noreferrer">如何获取Access Token？</a>

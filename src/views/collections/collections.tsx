@@ -20,10 +20,6 @@ let Collections = (props:IProps) => {
         fetchCollections()
     },[])
 
-    useEffect(() => {
-        
-    })
-
     let fetchCollections = () => {
         axios.get(`${API_CONFIG.userCollections}${props.match.params.loginname}`)
         .then(res => {
