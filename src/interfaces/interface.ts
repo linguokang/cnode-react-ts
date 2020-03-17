@@ -46,3 +46,13 @@ export interface Ireplie {
     reply_id: number;
     is_uped: boolean;
 }
+
+export interface Imessage {
+    id: string;
+    type: string;
+    has_read: true;
+    author: IuserInfo;
+    topic: Itopics;
+    reply: any;
+    create_at: string;
+}
